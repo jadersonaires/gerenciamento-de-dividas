@@ -1,10 +1,12 @@
 import { Router } from 'express';
+import axios from 'axios';
 
 const usersRouter = Router();
 
-usersRouter.get('/', (request, response) => {
+usersRouter.get('/', async (request, response) => {
   try {
-    return response.json({ message: 'list user ...!' });
+    const users = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+    response.status(200).json(users.data);
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
